@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import utils
+from coreset import uncertainty_based
 from cla_models_multihead import Vanilla_NN, MFVI_NN
 
 def run_vcl(hidden_size, no_epochs, data_gen, coreset_method, coreset_size=0, batch_size=None, single_head=True):
@@ -29,6 +30,9 @@ def run_vcl(hidden_size, no_epochs, data_gen, coreset_method, coreset_size=0, ba
 
         # Select coreset if needed
         if coreset_size > 0:
+            if type(coreset_method) is str and coreset_method == "uncertainty_based":
+                x_coresets, y_coresets, x_train, y_train = uncertainty_based(
+                    ml_model if mf_model is None else mf_model, x_coresets, y_coresets, x_train, y_train, coreset_size)
             x_coresets, y_coresets, x_train, y_train = coreset_method(x_coresets, y_coresets, x_train, y_train, coreset_size)
 
         # Train on non-coreset data

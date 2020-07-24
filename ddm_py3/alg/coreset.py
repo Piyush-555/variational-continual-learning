@@ -30,6 +30,10 @@ def k_center(x_coreset, y_coreset, x_train, y_train, coreset_size):
 
     return x_coreset, y_coreset, x_train, y_train
 
+""" Uncertainty-based coreset selection """
+def uncertainty_based(model, x_coreset, y_coreset, x_train, y_train, coreset_size):
+    raise NotImplementedError
+
 def update_distance(dists, x_train, current_id):
     for i in range(x_train.shape[0]):
         current_dist = np.linalg.norm(x_train[i,:]-x_train[current_id,:])
