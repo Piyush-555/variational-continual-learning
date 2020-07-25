@@ -37,8 +37,9 @@ def run_vcl(hidden_size, no_epochs, data_gen, coreset_method, coreset_size=0, ba
         if coreset_size > 0:
             if type(coreset_method) is str and coreset_method == "uncertainty_based":
                 x_coresets, y_coresets, x_train, y_train = uncertainty_based(
-                    mf_model, x_coresets, y_coresets, x_train, y_train, coreset_size)
-            x_coresets, y_coresets, x_train, y_train = coreset_method(x_coresets, y_coresets, x_train, y_train, coreset_size)
+                    mf_model, task_id, x_coresets, y_coresets, x_train, y_train, coreset_size)
+            else:
+                x_coresets, y_coresets, x_train, y_train = coreset_method(x_coresets, y_coresets, x_train, y_train, coreset_size)
 
         # Incorporate coreset data and make prediction
         acc = utils.get_scores(mf_model, x_testsets, y_testsets, x_coresets, y_coresets, hidden_size, no_epochs, single_head, batch_size)

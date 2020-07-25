@@ -52,7 +52,7 @@ hidden_size = [100, 100]
 batch_size = 256
 no_epochs = 100
 single_head = True
-num_tasks = 5
+num_tasks = 10
 
 # Run vanilla VCL
 tf.set_random_seed(12)
@@ -85,8 +85,19 @@ kcen_vcl_result = vcl.run_vcl(hidden_size, no_epochs, data_gen,
     coreset.k_center, coreset_size, batch_size, single_head)
 print(kcen_vcl_result)
 
+# Run Uncertainty-based coreset VCL
+tf.reset_default_graph()
+tf.set_random_seed(12)
+np.random.seed(1)
+
+data_gen = PermutedMnistGenerator(num_tasks)
+uncertainty_vcl_result = vcl.run_vcl(hidden_size, no_epochs, data_gen, 
+    'uncertainty_based', coreset_size, batch_size, single_head)
+print(uncertainty_vcl_result)
+
 # Plot average accuracy
 vcl_avg = np.nanmean(vcl_result, 1)
 rand_vcl_avg = np.nanmean(rand_vcl_result, 1)
 kcen_vcl_avg = np.nanmean(kcen_vcl_result, 1)
-utils.plot('results/permuted.jpg', vcl_avg, rand_vcl_avg, kcen_vcl_avg)
+uncertainty_vcl_avg = np.nanmean(uncertainty_vcl_result, 1)
+utils.plot('results/permuted.jpg', vcl_avg, rand_vcl_avg, kcen_vcl_avg, uncertainty_vcl_avg)

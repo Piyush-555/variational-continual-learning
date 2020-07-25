@@ -73,7 +73,7 @@ tf.reset_default_graph()
 tf.set_random_seed(12)
 np.random.seed(1)
 
-coreset_size = 40
+coreset_size = 200
 data_gen = SplitMnistGenerator()
 rand_vcl_result = vcl.run_vcl(hidden_size, no_epochs, data_gen, 
     coreset.rand_from_batch, coreset_size, batch_size, single_head)
