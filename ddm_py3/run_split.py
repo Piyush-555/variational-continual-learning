@@ -55,7 +55,7 @@ class SplitMnistGenerator():
 
 hidden_size = [256, 256]
 batch_size = None
-no_epochs = 120
+no_epochs = 50
 single_head = False
 
 # Run vanilla VCL
@@ -80,6 +80,7 @@ rand_vcl_result = vcl.run_vcl(hidden_size, no_epochs, data_gen,
 print(rand_vcl_result)
 
 # Run k-center coreset VCL
+coreset_size = 200
 tf.reset_default_graph()
 tf.set_random_seed(12)
 np.random.seed(1)
@@ -90,6 +91,7 @@ kcen_vcl_result = vcl.run_vcl(hidden_size, no_epochs, data_gen,
 print(kcen_vcl_result)
 
 # Run uncertainty-based coreset VCL
+coreset_size = 200
 tf.reset_default_graph()
 tf.set_random_seed(12)
 np.random.seed(1)
